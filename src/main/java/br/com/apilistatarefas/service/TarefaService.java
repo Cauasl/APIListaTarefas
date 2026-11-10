@@ -27,4 +27,8 @@ public class TarefaService {
     public TarefaModel criarTarefa(TarefaDTO tarefaDTO) {
         return repository.criarTarefa(tarefaDTO);
     }
+
+    public TarefaModel atualizarTarefa(int id, TarefaDTO tarefaDTO) {
+        return repository.atualizarTarefa(id, tarefaDTO);
+    }
 }

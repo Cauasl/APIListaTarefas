@@ -57,12 +57,19 @@ public class TarefaLocalRepository implements TarefasRepository {
 
     @Override
     public TarefaModel atualizarTarefa(int id, TarefaDTO tarefa) {
-        TarefaModel tarefaAtualizada = listaTarefas.stream()
+        Optional<TarefaModel> tarefaDaLista = listaTarefas.stream()
                 .filter(t -> t.getId() == id)
-                .findFirst()
-                .orElse(null);
+                .findFirst();
 
+        if(tarefa.titulo() == null || tarefa.descricao() == null) {
+            throw new RuntimeException("Falta campos para atualizar Tarefa");
+        }
 
-        return null;
+        tarefaDaLista.get().setTitulo(tarefa.titulo());
+        tarefaDaLista.get().setDescricao(Optional.ofNullable(tarefa.descricao()));
+
+        return tarefaDaLista.orElseThrow(() -> new RuntimeException("Valor não encontrado"));
     }
+
+
 }
