@@ -13,4 +13,10 @@ public interface TarefasRepository {
 
     public TarefaModel criarTarefa(TarefaDTO tarefa);
     public TarefaModel atualizarTarefa(int id, TarefaDTO tarefa);
+
+    public void deletarTarefa(int id);
+
+    //public TarefaModel atualizarTituloTarefa(TarefaDTO tarefa);
+
+    //public TarefaModel atualizarDescricaoTarefa(TarefaDTO tarefa);
 }

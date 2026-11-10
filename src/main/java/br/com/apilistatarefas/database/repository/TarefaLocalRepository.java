@@ -71,5 +71,8 @@ public class TarefaLocalRepository implements TarefasRepository {
         return tarefaDaLista.orElseThrow(() -> new RuntimeException("Valor não encontrado"));
     }
 
-
+    @Override
+    public void deletarTarefa(int id) {
+        listaTarefas.removeIf(tarefa -> tarefa.getId() == id);
+    }
 }

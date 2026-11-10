@@ -31,4 +31,11 @@ public class TarefaService {
     public TarefaModel atualizarTarefa(int id, TarefaDTO tarefaDTO) {
         return repository.atualizarTarefa(id, tarefaDTO);
     }
+
+    public void deletarTarefa(int id) {
+        if(id <= 0) {
+            throw new IllegalArgumentException("Id invalido");
+        }
+        repository.deletarTarefa(id);
+    }
 }
