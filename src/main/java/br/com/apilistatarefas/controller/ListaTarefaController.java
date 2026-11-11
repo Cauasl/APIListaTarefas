@@ -1,6 +1,7 @@
 package br.com.apilistatarefas.controller;
 
 import br.com.apilistatarefas.DTO.TarefaDTO;
+import br.com.apilistatarefas.DTO.TarefaDTOCompleta;
 import br.com.apilistatarefas.database.model.TarefaModel;
 import br.com.apilistatarefas.service.TarefaService;
 import lombok.RequiredArgsConstructor;
@@ -53,14 +54,20 @@ public class ListaTarefaController {
 
     @PatchMapping("/{id}/titulo")
     @ResponseStatus(HttpStatus.OK)
-    public TarefaModel atualizarTarefaTitulo(@PathVariable int id, @RequestBody TarefaDTO dto) {
+    public TarefaModel atualizarTarefaTitulo(@PathVariable int id, @RequestBody TarefaDTOCompleta dto) {
         return serviceTarefa.atualizarTituloTarefa(id, dto);
     }
 
     @PatchMapping("/{id}/descricao")
     @ResponseStatus(HttpStatus.OK)
-    public TarefaModel atualizarTarefaDescricao(@PathVariable int id, @RequestBody TarefaDTO dto) {
+    public TarefaModel atualizarTarefaDescricao(@PathVariable int id, @RequestBody TarefaDTOCompleta dto) {
         return serviceTarefa.atualizarDescricaoTarefa(id, dto);
+    }
+
+    @PatchMapping("/{id}/status")
+    @ResponseStatus(HttpStatus.OK)
+    public TarefaModel atualizarTarefaStatus(@PathVariable int id, @RequestBody TarefaDTOCompleta dto) {
+        return serviceTarefa.atualizarStatusTarefa(id, dto);
     }
 
     @DeleteMapping("/{id}")

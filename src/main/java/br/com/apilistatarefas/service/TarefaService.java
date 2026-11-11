@@ -1,7 +1,9 @@
 package br.com.apilistatarefas.service;
 
 import br.com.apilistatarefas.DTO.TarefaDTO;
+import br.com.apilistatarefas.DTO.TarefaDTOCompleta;
 import br.com.apilistatarefas.database.model.TarefaModel;
+import br.com.apilistatarefas.database.model.TarefaStatus;
 import br.com.apilistatarefas.database.repository.TarefaLocalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,11 +41,15 @@ public class TarefaService {
         repository.deletarTarefa(id);
     }
 
-    public TarefaModel atualizarTituloTarefa(int id, TarefaDTO tarefaDTO) {
+    public TarefaModel atualizarTituloTarefa(int id, TarefaDTOCompleta tarefaDTO) {
         return repository.atualizarTituloTarefa(id, tarefaDTO);
     }
 
-    public TarefaModel atualizarDescricaoTarefa(int id, TarefaDTO tarefaDTO) {
-        return repository.atualizarDescricaoTarefa(id, tarefaDTO);
+    public TarefaModel atualizarDescricaoTarefa(int id, TarefaDTOCompleta tarefaDTO) {
+        return repository.atualizarTarefaDescricao(id, tarefaDTO);
+    }
+
+    public TarefaModel atualizarStatusTarefa(int id, TarefaDTOCompleta tarefaDTO) {
+        return repository.atualizarTarefaStatus(id, tarefaDTO);
     }
 }

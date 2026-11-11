@@ -1,6 +1,7 @@
 package br.com.apilistatarefas.database.repository;
 
 import br.com.apilistatarefas.DTO.TarefaDTO;
+import br.com.apilistatarefas.DTO.TarefaDTOCompleta;
 import br.com.apilistatarefas.database.model.TarefaModel;
 import br.com.apilistatarefas.database.model.TarefaStatus;
 import br.com.apilistatarefas.exceptions.ExcecaoTarefaNaoEncontrada;
@@ -83,7 +84,7 @@ public class TarefaLocalRepository implements TarefasRepository {
     }
 
     @Override
-    public TarefaModel atualizarTituloTarefa(int id, TarefaDTO tarefa) {
+    public TarefaModel atualizarTituloTarefa(int id, TarefaDTOCompleta tarefa) {
         Optional<TarefaModel> tarefaDaLista = procurarTarefa(t -> t.getId() == id);
 
         tarefaDaLista.get().setTitulo(tarefa.titulo());
@@ -91,10 +92,18 @@ public class TarefaLocalRepository implements TarefasRepository {
     }
 
     @Override
-    public TarefaModel atualizarDescricaoTarefa(int id, TarefaDTO tarefa) {
+    public TarefaModel atualizarTarefaDescricao(int id, TarefaDTOCompleta tarefa) {
         Optional<TarefaModel> tarefaDaLista = procurarTarefa(t -> t.getId() == id);
 
         tarefaDaLista.get().setDescricao(Optional.ofNullable(tarefa.descricao()));
+        return tarefaDaLista.orElseThrow(() -> new ExcecaoTarefaNaoEncontrada(id));
+    }
+
+    @Override
+    public TarefaModel atualizarTarefaStatus(int id, TarefaDTOCompleta tarefa) {
+        Optional<TarefaModel> tarefaDaLista = procurarTarefa(t -> t.getId() == id);
+
+        tarefaDaLista.get().setStatus(tarefa.status());
         return tarefaDaLista.orElseThrow(() -> new ExcecaoTarefaNaoEncontrada(id));
     }
 }
