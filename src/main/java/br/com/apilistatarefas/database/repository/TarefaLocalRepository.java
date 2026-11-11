@@ -75,4 +75,24 @@ public class TarefaLocalRepository implements TarefasRepository {
     public void deletarTarefa(int id) {
         listaTarefas.removeIf(tarefa -> tarefa.getId() == id);
     }
+
+    @Override
+    public TarefaModel atualizarTituloTarefa(int id, TarefaDTO tarefa) {
+        Optional<TarefaModel> tarefaDaLista = listaTarefas.stream()
+                .filter(t -> t.getId() == id)
+                .findFirst();
+
+        tarefaDaLista.get().setTitulo(tarefa.titulo());
+        return tarefaDaLista.orElse(null);
+    }
+
+    @Override
+    public TarefaModel atualizarDescricaoTarefa(int id, TarefaDTO tarefa) {
+        Optional<TarefaModel> tarefaDaLista = listaTarefas.stream()
+                .filter(t -> t.getId() == id)
+                .findFirst();
+
+        tarefaDaLista.get().setDescricao(Optional.ofNullable(tarefa.descricao()));
+        return tarefaDaLista.orElse(null);
+    }
 }

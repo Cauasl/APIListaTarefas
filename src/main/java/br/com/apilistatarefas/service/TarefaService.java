@@ -38,4 +38,12 @@ public class TarefaService {
         }
         repository.deletarTarefa(id);
     }
+
+    public TarefaModel atualizarTituloTarefa(int id, TarefaDTO tarefaDTO) {
+        return repository.atualizarTituloTarefa(id, tarefaDTO);
+    }
+
+    public TarefaModel atualizarDescricaoTarefa(int id, TarefaDTO tarefaDTO) {
+        return repository.atualizarDescricaoTarefa(id, tarefaDTO);
+    }
 }

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -48,6 +49,18 @@ public class ListaTarefaController {
             @PathVariable int id,
             @RequestBody TarefaDTO dto) {
         return serviceTarefa.atualizarTarefa(id, dto);
+    }
+
+    @PatchMapping("/{id}/titulo")
+    @ResponseStatus(HttpStatus.OK)
+    public TarefaModel atualizarTarefaTitulo(@PathVariable int id, @RequestBody TarefaDTO dto) {
+        return serviceTarefa.atualizarTituloTarefa(id, dto);
+    }
+
+    @PatchMapping("/{id}/descricao")
+    @ResponseStatus(HttpStatus.OK)
+    public TarefaModel atualizarTarefaDescricao(@PathVariable int id, @RequestBody TarefaDTO dto) {
+        return serviceTarefa.atualizarDescricaoTarefa(id, dto);
     }
 
     @DeleteMapping("/{id}")
