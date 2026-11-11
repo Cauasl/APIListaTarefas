@@ -64,6 +64,7 @@ public class ListaTarefaController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public void deleteTarefa(@PathVariable int id) {
         serviceTarefa.deletarTarefa(id);
     }

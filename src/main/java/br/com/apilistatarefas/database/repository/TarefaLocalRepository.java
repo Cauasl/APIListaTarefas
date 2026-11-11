@@ -3,12 +3,14 @@ package br.com.apilistatarefas.database.repository;
 import br.com.apilistatarefas.DTO.TarefaDTO;
 import br.com.apilistatarefas.database.model.TarefaModel;
 import br.com.apilistatarefas.database.model.TarefaStatus;
+import br.com.apilistatarefas.exceptions.ExcecaoTarefaNaoEncontrada;
 import org.springframework.stereotype.Repository;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 @Repository
 public class TarefaLocalRepository implements TarefasRepository {
@@ -30,6 +32,12 @@ public class TarefaLocalRepository implements TarefasRepository {
                 .build());
     }
 
+    public Optional<TarefaModel> procurarTarefa(Predicate<TarefaModel> p) {
+        return listaTarefas.stream()
+                .filter(p)
+                .findFirst();
+    }
+
     @Override
     public List<TarefaModel> listaTarefa() {
         return listaTarefas;
@@ -37,7 +45,7 @@ public class TarefaLocalRepository implements TarefasRepository {
 
     @Override
     public TarefaModel pegarTarefa(int id) {
-        return listaTarefas.stream().filter(tarefa -> tarefa.getId() == id).findFirst().orElse(null);
+        return listaTarefas.stream().filter(tarefa -> tarefa.getId() == id).findFirst().orElseThrow(() -> new ExcecaoTarefaNaoEncontrada(id));
     }
 
     @Override
@@ -57,9 +65,7 @@ public class TarefaLocalRepository implements TarefasRepository {
 
     @Override
     public TarefaModel atualizarTarefa(int id, TarefaDTO tarefa) {
-        Optional<TarefaModel> tarefaDaLista = listaTarefas.stream()
-                .filter(t -> t.getId() == id)
-                .findFirst();
+        Optional<TarefaModel> tarefaDaLista = procurarTarefa(t -> t.getId() == id);
 
         if(tarefa.titulo() == null || tarefa.descricao() == null) {
             throw new RuntimeException("Falta campos para atualizar Tarefa");
@@ -68,7 +74,7 @@ public class TarefaLocalRepository implements TarefasRepository {
         tarefaDaLista.get().setTitulo(tarefa.titulo());
         tarefaDaLista.get().setDescricao(Optional.ofNullable(tarefa.descricao()));
 
-        return tarefaDaLista.orElseThrow(() -> new RuntimeException("Valor não encontrado"));
+        return tarefaDaLista.orElseThrow(() -> new ExcecaoTarefaNaoEncontrada(id));
     }
 
     @Override
@@ -78,21 +84,17 @@ public class TarefaLocalRepository implements TarefasRepository {
 
     @Override
     public TarefaModel atualizarTituloTarefa(int id, TarefaDTO tarefa) {
-        Optional<TarefaModel> tarefaDaLista = listaTarefas.stream()
-                .filter(t -> t.getId() == id)
-                .findFirst();
+        Optional<TarefaModel> tarefaDaLista = procurarTarefa(t -> t.getId() == id);
 
         tarefaDaLista.get().setTitulo(tarefa.titulo());
-        return tarefaDaLista.orElse(null);
+        return tarefaDaLista.orElseThrow(() -> new ExcecaoTarefaNaoEncontrada(id));
     }
 
     @Override
     public TarefaModel atualizarDescricaoTarefa(int id, TarefaDTO tarefa) {
-        Optional<TarefaModel> tarefaDaLista = listaTarefas.stream()
-                .filter(t -> t.getId() == id)
-                .findFirst();
+        Optional<TarefaModel> tarefaDaLista = procurarTarefa(t -> t.getId() == id);
 
         tarefaDaLista.get().setDescricao(Optional.ofNullable(tarefa.descricao()));
-        return tarefaDaLista.orElse(null);
+        return tarefaDaLista.orElseThrow(() -> new ExcecaoTarefaNaoEncontrada(id));
     }
 }
