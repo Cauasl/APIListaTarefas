@@ -162,7 +162,7 @@ Os valores devem ser enviados exatamente como estão escritos, respeitando as le
 
 Exclui uma tarefa utilizando seu ID. Não é necessário enviar corpo na requisição.
 
-**Observação sobre o status HTTP:** atualmente, o método do Controller está anotado para responder com `404 NOT_FOUND`, mesmo quando a chamada de exclusão é realizada. Vale ajustar essa anotação no código para retornar um status adequado, como `204 NO_CONTENT`.
+**Observação sobre o status HTTP:** atualmente, o método do Controller está anotado para responder com `204 NO_CONTENT`, mesmo quando a chamada de exclusão é realizada. Vale ajustar essa anotação no código para retornar um status adequado, como `204 NO_CONTENT`.
 
 ## Tratamento de erros
 
