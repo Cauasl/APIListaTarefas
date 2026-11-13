@@ -83,6 +83,8 @@ public class TarefaLocalRepository implements TarefasRepository {
         listaTarefas.removeIf(tarefa -> tarefa.getId() == id);
     }
 
+
+    // PATCH
     @Override
     public TarefaModel atualizarTituloTarefa(int id, TarefaDTOCompleta tarefa) {
         Optional<TarefaModel> tarefaDaLista = procurarTarefa(t -> t.getId() == id);
@@ -103,7 +105,7 @@ public class TarefaLocalRepository implements TarefasRepository {
     public TarefaModel atualizarTarefaStatus(int id, TarefaDTOCompleta tarefa) {
         Optional<TarefaModel> tarefaDaLista = procurarTarefa(t -> t.getId() == id);
 
-        tarefaDaLista.get().setStatus(tarefa.status());
+        tarefaDaLista.get().setStatus(TarefaStatus.valueOf(tarefa.status()));
         return tarefaDaLista.orElseThrow(() -> new ExcecaoTarefaNaoEncontrada(id));
     }
 }
